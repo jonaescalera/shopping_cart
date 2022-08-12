@@ -8,19 +8,47 @@ body{
 }
 
 .container {
+  /*The css grid is chosen for the home page layout*/
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 100px 400px 100px;
   grid-template-areas: 
-    'header header header header'
-    'menu content content content'
-    'footer footer footer footer'; 
+    'header header header header header'
+    'menu content content content content'
+    'footer footer footer footer footer'; 
   gap: 10px;  
 }
 
 .header {
-  background-color: red;
+  background-color: #F0F8FF;
   grid-area: header;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
+.header > div {
+  border: 1px solid black;
+  align-content: center;
+}
+
+.header-main {
+  /*The flexbox css is chosen to fit elements within header*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navbar li {
+  list-style: none;
+  display: inline-block;
+  padding: 0 20px;
+
+}
+
+.searchBar {
+  width: 600px;
+  padding: 1em;
 }
 
 .menu {
@@ -35,6 +63,6 @@ body{
   background-color: purple;
   grid-area: footer;
 }
-.App {
-  text-align: center;
-}
+
+
+
