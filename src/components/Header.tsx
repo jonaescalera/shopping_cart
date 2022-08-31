@@ -1,12 +1,16 @@
 import SearchProduct from "./SearchProduct";
 
-const Header = () => {
+export type headerProps = {
+  handleItems: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const Header = ({ handleItems }: headerProps) => {
   return (
     <div className="header">
       <div>Shopping Cart</div>
 
       <div className="header-main">
-        <SearchProduct />
+        <SearchProduct handleItems={handleItems} />
         <nav className="navbar">
           <ul>
             <li>Category</li>

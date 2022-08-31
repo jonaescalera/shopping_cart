@@ -1,68 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent } from "react";
+import { Movie } from "../types/Movie";
 import Content from "./Content";
 import Footer from "./Footer";
 import Header from "./Header";
 import Menu from "./Menu";
 
-interface HomeProps {
-  items: string[];
-}
+// export type HomeProps = {
+//   // items: string[];
+//   onChange:(event: ChangeEvent<HTMLInputElement>) => void;
+// }
 
-type Movie = {
-  id: number;
-  i: {
-    imageUrl: string;
-    height: number;
-  };
-  //i: object;
-  l: string;
-};
+// type Movie = {
+//   id: number;
+//   i: {
+//     imageUrl: string;
+//     height: number;
+//   };
+//   //i: object;
+//   l: string;
+// };
 
 //const items: HomeProps = ['Spider-man', 'SuperMan', 'Batman'];
 
-const options = {
-  method: "GET",
-  headers: {
-    "X-RapidAPI-Key": "9aa50225d9mshb5062c41eb34d54p1e1d87jsn037ddc72f5f6",
-    "X-RapidAPI-Host": "online-movie-database.p.rapidapi.com",
-  },
-};
+// const options = {
+//   method: "GET",
+//   headers: {
+//     "X-RapidAPI-Key": "9aa50225d9mshb5062c41eb34d54p1e1d87jsn037ddc72f5f6",
+//     "X-RapidAPI-Host": "online-movie-database.p.rapidapi.com",
+//   },
+// };
 
-const Home = ({ items }: HomeProps) => {
+const API_KEY = "994c547c82db3ec8fddb4fee9896a41d";
+const BASEURL = "https://api.themoviedb.org/3";
+
+const Home = () => {
   const [movies, setMovies] = useState<Array<Movie>>([]);
+  const [moviesFiltered, setMoviesFiltered] = useState<Array<Movie>>([]);
+  //const url = `${BASEURL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`;
+  // const movies = useFetch(url);
+  // const moviesFiltered = useFetch(url);
 
-  // useEffect(() => {
-  //   fetch(
-  //     "https://online-movie-database.p.rapidapi.com/auto-complete?q=game%20of%20thr",
-  //     options
-  //   )
-  //     .then((response) => response.json())
-  //     .then((response) => {
-  //       setMovies(response.d);
-  //       console.log(response);
-  //       console.log(response.d[0].i.height);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, []);
+  useEffect(() => {
+    const url = `${BASEURL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((response) => {
+        setMovies(response.results);
+        setMoviesFiltered(response.results);
+        console.log(response.results);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const handleItems = (event: ChangeEvent<HTMLInputElement>) => {
+    const moviesFiltered = movies.filter((item) =>
+      item.original_title
+        .toUpperCase()
+        .includes(event.target.value.toUpperCase())
+    );
+    setMoviesFiltered(moviesFiltered);
+  };
+
   return (
     <div className="container">
-      {/* <div className="header">header</div> */}
-      {/* <div className="container-body"> */}
-      {/* <div className="menu">menu</div> */}
-      {/* <div className="content">content</div> */}
-      <Header />
+      <Header handleItems={handleItems} />
       <Menu />
-      <Content />
+      <Content movies={moviesFiltered} />
       <Footer />
-      {/* <div className="footer">footer</div> */}
-      {/* </div> */}
-      {/* {movies &&
-        movies.map((item) => (
-          <div className="card" key={item.id}>
-            <h4>{item.l}</h4>
-            <img src={item.i?.imageUrl} alt="" width="300" height="300" />
-          </div>
-        ))} */}
     </div>
   );
 };

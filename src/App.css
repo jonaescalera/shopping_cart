@@ -11,7 +11,7 @@ body{
   /*The css grid is chosen for the home page layout*/
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 100px 400px 100px;
+  grid-template-rows: 100px auto 100px;
   grid-template-areas: 
     'header header header header header'
     'menu content content content content'
@@ -59,6 +59,24 @@ body{
   background-color: white;
   grid-area: content;
 }
+
+.content_movies {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-content: center;
+}
+
+.card {
+  padding: 1em;
+}
+
+.title_movie {
+  white-space: nowrap;
+  width: 50px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .footer {
   background-color: purple;
   grid-area: footer;
