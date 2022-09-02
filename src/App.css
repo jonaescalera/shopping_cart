@@ -56,8 +56,9 @@ body{
   grid-area: menu;
 }
 .content {
-  background-color: white;
+  background-color: #E4E0E0 ;
   grid-area: content;
+  /* margin: 1em; */
 }
 
 .content_movies {
