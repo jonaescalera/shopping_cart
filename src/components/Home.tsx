@@ -1,6 +1,8 @@
 import React, { useEffect, useState, ChangeEvent } from "react";
+import { Route, Routes } from "react-router-dom";
 import { Movie } from "../types/Movie";
 import Content from "./Content";
+import Detail from "./Detail";
 import Footer from "./Footer";
 import Header from "./Header";
 import Menu from "./Menu";
@@ -54,9 +56,7 @@ const Home = () => {
 
   const handleItems = (event: ChangeEvent<HTMLInputElement>) => {
     const moviesFiltered = movies.filter((item) =>
-      item.original_title
-        .toUpperCase()
-        .includes(event.target.value.toUpperCase())
+      item.title.toUpperCase().includes(event.target.value.toUpperCase())
     );
     setMoviesFiltered(moviesFiltered);
   };
@@ -65,8 +65,13 @@ const Home = () => {
     <div className="container">
       <Header handleItems={handleItems} />
       <Menu />
-      <Content movies={moviesFiltered} />
       <Footer />
+
+      <Routes>
+        <Route path="/" element={<Content movies={moviesFiltered} />} />
+        <Route path="detail/:movie_id" element={<Detail />} />
+        {/* </Route> */}
+      </Routes>
     </div>
   );
 };

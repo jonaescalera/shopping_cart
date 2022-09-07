@@ -1,11 +1,13 @@
 import { Movie } from "../types/Movie";
 import {
   Card,
+  CardActionArea,
   CardHeader,
   CardMedia,
   CardContent,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 interface ContentProps {
   movies: Array<Movie>;
@@ -20,34 +22,37 @@ const Content = ({ movies }: ContentProps) => {
       <div className="content_movies">
         {movies &&
           movies.map((item) => (
-            // <div className="card" key={item.id}>
-            //   <h4 className="title_movie">{item.original_title}</h4>
-            //   <img src={`${BASEURLIMAGE}${item?.backdrop_path}`} alt="" />
-            // </div>
             <Card
               key={item.id}
               sx={{ margin: "10px", backgroundColor: "#fff" }}
             >
-              <CardHeader
-                titleTypographyProps={{
-                  whiteSpace: "nowrap",
-                  fontSize: 15,
-                  width: "250px",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-                title={item.original_title}
-              />
-              <CardMedia
-                component="img"
-                height="194"
-                src={`${BASEURLIMAGE}${item?.backdrop_path}`}
-              />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  {item.overview}
-                </Typography>
-              </CardContent>
+              <CardActionArea component="div" disableRipple>
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={`/detail/${item.id}`}
+                >
+                  <CardHeader
+                    titleTypographyProps={{
+                      whiteSpace: "nowrap",
+                      fontSize: 15,
+                      width: "250px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                    title={item.title}
+                  />
+                  <CardMedia
+                    component="img"
+                    height="194"
+                    src={`${BASEURLIMAGE}${item?.backdrop_path}`}
+                  />
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      {item.overview}
+                    </Typography>
+                  </CardContent>
+                </Link>
+              </CardActionArea>
             </Card>
           ))}
       </div>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SearchProduct from "./SearchProduct";
 
 export type headerProps = {
@@ -13,7 +14,9 @@ const Header = ({ handleItems }: headerProps) => {
         <SearchProduct handleItems={handleItems} />
         <nav className="navbar">
           <ul>
-            <li>Category</li>
+            <li style={{ cursor: "pointer" }}>
+              <Link to="/detail">Category</Link>
+            </li>
             <li>Offers</li>
             <li>History</li>
             <li>Clothes</li>
