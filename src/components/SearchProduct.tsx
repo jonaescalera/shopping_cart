@@ -12,6 +12,7 @@ const SearchProduct = ({ handleItems }: headerProps) => {
         type="text"
         placeholder="Search products, brands..."
         onChange={handleItems}
+        // onClick={handleItems}
       />
     </div>
   );

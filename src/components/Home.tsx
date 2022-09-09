@@ -5,6 +5,7 @@ import Content from "./Content";
 import Detail from "./Detail";
 import Footer from "./Footer";
 import Header from "./Header";
+import Login from "./Login";
 import Menu from "./Menu";
 
 // export type HomeProps = {
@@ -54,24 +55,15 @@ const Home = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  const handleItems = (event: ChangeEvent<HTMLInputElement>) => {
-    const moviesFiltered = movies.filter((item) =>
-      item.title.toUpperCase().includes(event.target.value.toUpperCase())
-    );
-    setMoviesFiltered(moviesFiltered);
-  };
-
   return (
     <div className="container">
-      <Header handleItems={handleItems} />
+      {/* <Header handleItems={handleItems} />
       <Menu />
+      <Footer /> */}
+      <Header />
+      <Menu />
+      <Content movies={moviesFiltered} />
       <Footer />
-
-      <Routes>
-        <Route path="/" element={<Content movies={moviesFiltered} />} />
-        <Route path="detail/:movie_id" element={<Detail />} />
-        {/* </Route> */}
-      </Routes>
     </div>
   );
 };

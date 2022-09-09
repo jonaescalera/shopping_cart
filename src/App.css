@@ -1,10 +1,17 @@
 * {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 body{
-  background-color: gray;
+  /* background-color: gray; */
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
 }
 
 .container {
@@ -17,6 +24,7 @@ body{
     'menu content content content content'
     'footer footer footer footer footer'; 
   gap: 10px;  
+  background-color: gray;
 }
 
 .header {
