@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 
 interface ContentProps {
-  movies: Array<Movie>;
+  movies?: Movie[];
 }
 
 const BASEURLIMAGE = "https://image.tmdb.org/t/p/w185_and_h278_bestv2";

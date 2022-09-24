@@ -2,7 +2,7 @@ import { Box, Button, TextField } from "@mui/material";
 
 const Login = () => {
   return (
-    <div className="login">
+    <div className="login" data-testid="login-page">
       <h1>registrarse</h1>
       <Box
         sx={{

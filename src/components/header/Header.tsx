@@ -1,21 +1,13 @@
-import { ChangeEvent } from "react";
 import { Link } from "react-router-dom";
-import SearchProduct from "./SearchProduct";
+import SearchProduct from "../search/SearchProduct";
 
 export type headerProps = {
-  handleItems: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleItems: (event: string) => void;
 };
 
-const Header = (/*{ handleItems }: headerProps*/) => {
-  const handleItems = (event: ChangeEvent<HTMLInputElement>) => {
-    // const moviesFiltered = movies.filter((item) =>
-    //   item.title.toUpperCase().includes(event.target.value.toUpperCase())
-    // );
-    // setMoviesFiltered(moviesFiltered);
-  };
-
+const Header = ({ handleItems }: headerProps) => {
   return (
-    <div className="header">
+    <div className="header" data-testid="header-page">
       <div>Shopping Cart</div>
 
       <div className="header-main">
@@ -28,7 +20,9 @@ const Header = (/*{ handleItems }: headerProps*/) => {
             <li>Offers</li>
             <li>History</li>
             <li>Clothes</li>
-            <li>Help</li>
+            <li data-testid="someID" style={{ cursor: "pointer" }}>
+              <Link to="/help">Help</Link>
+            </li>
           </ul>
         </nav>
       </div>
