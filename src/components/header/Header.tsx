@@ -1,17 +1,19 @@
 import { Link } from "react-router-dom";
+import { Product } from "../../types/Product";
 import SearchProduct from "../search/SearchProduct";
 
 export type headerProps = {
   handleItems: (event: string) => void;
+  items?: Product[];
 };
 
-const Header = ({ handleItems }: headerProps) => {
+const Header = ({ handleItems, items }: headerProps) => {
   return (
     <div className="header" data-testid="header-page">
       <div>Shopping Cart</div>
 
       <div className="header-main">
-        <SearchProduct handleItems={handleItems} />
+        <SearchProduct items={items} handleItems={handleItems} />
         <nav className="navbar">
           <ul>
             <li style={{ cursor: "pointer" }}>

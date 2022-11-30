@@ -1,27 +1,71 @@
-import { useEffect, useState } from "react"
+import { useEffect, useReducer, useRef} from "react"
 
+type ACTION = 
+ | {type: "API_REQUEST",  }
+ | {type: "FETCH_DATA", payload: [] }
+ | {type: "ERROR", payload: string}
 
-const useFetch = <T>(url: string) /*: [T[] | undefined, boolean, String] */=> {
-   const [results, setResults] = useState<T[]>();
-   const [isLoading, setloading] = useState<boolean>(false);
-   const [error, setError] = useState<String>("");
+type State = {
+  data?: [],
+  loading: boolean,
+  error?: string
+} 
 
-    useEffect(() => {
-        setloading(true);
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {            
-            setResults(data.results);
-            setloading(false);
-          })
-          .catch((err) => {
-            setError(err)
-            setloading(false);
-          })
-    },[url]);
+const initialState: State = {
+  data: [],
+  loading: false,
+  error: undefined
+}
 
-    //return results;
-   return [ results, isLoading, error ] as const
+function reducer(state: State, action: ACTION): State {
+
+  switch (action.type) {
+    case "API_REQUEST": 
+      return {...state, loading: true}
+    case "FETCH_DATA": 
+      return {...state, data: action.payload, loading: false}
+    case "ERROR": 
+      return {...state, error: action.payload, loading: false}
+  
+    default:
+      return state;
+  }
+}
+
+const useFetch = (url: string) => {
+   const [state, dispatch] = useReducer(reducer, initialState);
+   const cache = useRef<any>({});
+   useEffect(() => {
+    let cancelRequest = false;
+      if(!url) return;
+
+      const fetchData = async () =>{
+        dispatch({type: "API_REQUEST"});
+        if(cache.current[url]){
+          const data = cache.current[url];
+          dispatch({type:"FETCH_DATA", payload: data});
+        }else{
+          try {
+            const response = await fetch(url);
+            const data = await response.json();
+            cache.current[url] = data;
+            if (cancelRequest) return;
+            dispatch({type:"FETCH_DATA", payload: data});
+
+          } catch (e) {
+            if (cancelRequest) return;
+            dispatch({type:"ERROR", payload: (e as Error).message})
+          }
+          
+        }
+      }
+      fetchData();
+
+      return () => { cancelRequest = true };
+     
+   }, [url])
+
+   return state;
 }
 
 export default useFetch;
